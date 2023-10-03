@@ -2,18 +2,13 @@ const usuariosCadastrados = [
     { 
       usuario: 'usuario1',
       senha: 'senha1',
-      telefone: 'telefone_2',
+      telefone: '(82) 3440-6066',
     },
     { 
       usuario: 'usuario2',
       senha: 'senha2',
-      telefone: 'telefone_2',
+      telefone: '(45) 3887-0554',
     },
-    { 
-        usuario: 'a',
-        senha: 'b',
-        telefone: 'telefone_2',
-      },
   ];
   
   export default usuariosCadastrados;

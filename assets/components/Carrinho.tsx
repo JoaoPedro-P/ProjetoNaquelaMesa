@@ -95,7 +95,8 @@ export default function Carrinho({ navigation }) {
         keyExtractor={(item, index) => index.toString()}
       />
       <Text style={styles.itensPrice}>Total: R$ {valorTotal}</Text>
-      <Button color={'black'} title="Ir para o pagamento" onPress={() => navigation.navigate('Pagamento')} />
+      <Button color={'black'} title="Ir para o pagamento" onPress={() => {if(valorTotal != 0){
+        navigation.navigate('Pagamento')}}} />
     </SafeAreaView>
   );
 }
