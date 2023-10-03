@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Play fair Display.ttf",
+      "sha1": "27948bdf40b983e7e7405ae9dc101abc0c455c99"
+    },
+    {
+      "path": "assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf",
+      "sha1": "e56ffe27d31f8d13499b8d3aa5f00fdfed15da0e"
+    },
+    {
+      "path": "assets/fonts/PlayfairDisplay-VariableFont_wght.ttf",
+      "sha1": "72c45479fe155703447ddcde60289724b826d24d"
+    }
+  ]
+}
