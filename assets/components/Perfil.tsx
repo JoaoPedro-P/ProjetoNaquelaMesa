@@ -4,20 +4,7 @@ import { UsuarioContext } from '../../src/context/context';
 import usuariosCadastrados from '../../src/data/usuarios';
 
 export default function Perfil() {
-  const { username, senha } = useContext(UsuarioContext); // Use o contexto do usuário
-  const { telefone, setTelefone } = useContext(UsuarioContext); // Use os setters do contexto
   const {usuarios} = useContext(UsuarioContext);
-  useEffect(() => {
-    
-    const usuarioEncontrado = usuariosCadastrados.find(
-      (user) => user.usuario === username && user.senha === senha
-      
-    );
-
-    if (usuarioEncontrado) {
-      setTelefone(usuarioEncontrado.telefone);
-    }
-  }, [username, senha, setTelefone]);
 
   const styles = StyleSheet.create({
     container: {
