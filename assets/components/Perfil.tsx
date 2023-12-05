@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { UsuarioContext } from '../../src/context/context';
-import usuariosCadastrados from '../../src/data/usuarios';
 
 export default function Perfil() {
   const {usuarios} = useContext(UsuarioContext);
