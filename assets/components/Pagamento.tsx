@@ -3,13 +3,21 @@ import { View, Text, Alert, TextInput, Button, StyleSheet, SafeAreaView } from '
 import { UsuarioContext } from '../../src/context/context';
 
 export default function Pagamento(props: { navigation: { navigate: (arg0: string) => void; }; }) {
-  const { valorTotal } = useContext(UsuarioContext);
+  const { valorTotal, setValorTotal, setPratoSelecionado, pratoSelecionado,criaPedido } = useContext(UsuarioContext);
   const [pagamentoSelecionado, setPagamentoSelecionado] = useState('');
 
   const [nomeCartao, setNomeCartao] = useState('');
   const [numeroCartao, setNumeroCartao] = useState('');
   const [codigoSeguranca, setCodigoSeguranca] = useState('');
   const [dataVencimento, setDataVencimento] = useState('');
+
+  const handleDataVencimentoChange = (text) => {
+    // Limitar o texto a no máximo 4 caracteres
+    if (text.length <= 4) {
+      // Se a entrada for válida, atualize o estado
+      setDataVencimento(text);
+    }
+  };
 
   const validarPagamento = () => {
     if (!pagamentoSelecionado) {
@@ -26,6 +34,9 @@ export default function Pagamento(props: { navigation: { navigate: (arg0: string
       {
         text: 'Ok',
         onPress: () => {
+          setValorTotal('');
+          setPratoSelecionado('');
+          criaPedido();
           props.navigation.navigate('Inicio');
         },
       },
@@ -52,7 +63,14 @@ export default function Pagamento(props: { navigation: { navigate: (arg0: string
       fontSize: 18,
       paddingLeft: 10,
       paddingTop: 20,
-      color:'white'
+      color: 'white'
+    },
+    itensTextTitle: {
+      fontWeight: 'bold',
+      fontSize: 28,
+      paddingLeft: 10,
+      paddingTop: 20,
+      color: 'white'
     },
     itensPrice: {
       position: 'absolute', left: 0, right: 0, bottom: 0
@@ -88,7 +106,7 @@ export default function Pagamento(props: { navigation: { navigate: (arg0: string
 
       {pagamentoSelecionado === 'app' && (
         <SafeAreaView>
-          <Text style={styles.itensText}>Dados sobre o Cartão</Text>
+          <Text style={styles.itensTextTitle}>Dados sobre o Cartão</Text>
           <TextInput
             placeholder="Nome escrito como no Cartão:"
             value={nomeCartao}
@@ -104,6 +122,7 @@ export default function Pagamento(props: { navigation: { navigate: (arg0: string
             style={styles.itensText}
             cursorColor={'white'}
             placeholderTextColor={'white'}
+            keyboardType='decimal-pad'
           />
           <TextInput
             placeholder="Código de Segurança:"
@@ -112,23 +131,25 @@ export default function Pagamento(props: { navigation: { navigate: (arg0: string
             style={styles.itensText}
             cursorColor={'white'}
             placeholderTextColor={'white'}
+            keyboardType='decimal-pad'
           />
           <TextInput
             placeholder="Data de Vencimento (MM/AA):"
             value={dataVencimento}
-            onChangeText={(text) => setDataVencimento(text)}
+            onChangeText={handleDataVencimentoChange}
             style={styles.itensText}
             cursorColor={'white'}
             placeholderTextColor={'white'}
+            keyboardType='number-pad'
           />
         </SafeAreaView>
       )}
 
       <SafeAreaView style={styles.itensPrice}>
-      <Text style={styles.itensText}>Total: R$ {valorTotal}</Text>
+        <Text style={styles.itensText}>Total: R$ {valorTotal}</Text>
 
 
-      <Button color={'black'} title="Pagar" onPress={validarPagamento} />
+        <Button color={'black'} title="Pagar" onPress={validarPagamento} />
       </SafeAreaView>
     </SafeAreaView>
   );

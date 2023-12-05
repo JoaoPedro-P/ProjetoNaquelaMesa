@@ -13,12 +13,15 @@ import Carrinho from './assets/components/Carrinho';
 import { Alert } from 'react-native';
 import UsuarioProvider, { UsuarioContext } from './src/context/context';
 import Pagamento from './assets/components/Pagamento';
+import NovoUsuario from './assets/components/NovoUsuario';
+import Explicacao from './assets/components/Explicacao';
 
 const navDrawer = createDrawerNavigator();
 const navStack = createNativeStackNavigator();
 
 function MainDrawer(props: { navigation: { navigate: (arg0: string) => void; }; }) {
-  const { setUsername, setSenha, setTelefone, setPratoSelecionado, setValorTotal } = useContext(UsuarioContext);
+  const { setNome, setSenha, setTelefone, setPratoSelecionado, setValorTotal, setEmail, setUsuarios,
+          setPratos, setPratosPedidos } = useContext(UsuarioContext);
 
   return (
     <navDrawer.Navigator screenOptions={{
@@ -66,10 +69,14 @@ function MainDrawer(props: { navigation: { navigate: (arg0: string) => void; }; 
                   {
                     text: 'Sim',
                     onPress: () => {
-                      setUsername('');
                       setSenha('');
                       setTelefone('');
+                      setEmail('');
+                      setNome('');
                       setPratoSelecionado([]);
+                      setUsuarios({});
+                      setPratos([]);
+                      setPratosPedidos([]);
                       setValorTotal('');
                       props.navigation.navigate('Login');
                     },
@@ -92,7 +99,15 @@ function MainDrawer(props: { navigation: { navigate: (arg0: string) => void; }; 
                 drawerInactiveTintColor: '#121212',
                 headerTintColor:'white'
       }}/>
+            <navDrawer.Screen name='Banco de Dados' component={Explicacao} options={{
+                headerTitle:'Sobre o Banco de Dados',
+                drawerActiveBackgroundColor:'#b5a08f',
+                drawerActiveTintColor: 'white',
+                drawerInactiveTintColor: '#121212',
+                headerTintColor:'white'
+      }}/>
     </navDrawer.Navigator>
+    
 
   );
 }
@@ -106,6 +121,7 @@ export default function App() {
           headerStyle:{backgroundColor:'#b5a08f'}
           }}>
           <navStack.Screen name='Login' component={Login} options={{ headerShown: false, navigationBarColor:'#b5a08f' }} />
+          <navStack.Screen name='Novo Usuario' component={NovoUsuario} options={{ headerShown: true, navigationBarColor:'#b5a08f' }} />
           <navStack.Screen name='Inicio' component={MainDrawer} options={{ headerShown: false }} />
           <navStack.Screen name='Carrinho' component={Carrinho} />
           <navStack.Screen name='Pagamento' component={Pagamento} />

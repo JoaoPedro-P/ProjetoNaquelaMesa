@@ -1,6 +1,5 @@
 import { Image, Text, SafeAreaView, StyleSheet, ScrollView, SectionList, Alert, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
-import { sectionsData } from '../../src/data/pratos';
 import { UsuarioContext } from '../../src/context/context';
 
 const styles = StyleSheet.create({
@@ -46,22 +45,50 @@ const styles = StyleSheet.create({
 
 
 export default function TelaInicial() {
-  const { pratoSelecionado, setPratoSelecionado } = useContext(UsuarioContext); // Obtém a função do contexto
+  const { pratoSelecionado, setPratoSelecionado, pratos, buscarPratos } = useContext(UsuarioContext); // Obtém a função do contexto
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => mostrarMensagem(item)}>
-      <ScrollView style={styles.itensPosition}>
-        <SafeAreaView style={{ flexDirection: 'row' }}>
-          <SafeAreaView style={{ flex: 1, paddingRight: 8 }}>
-            <Text style={styles.itensName}> {item.name}</Text>
-            <Text style={styles.itensText}>{item.ingredients}</Text>
-            <Text style={styles.itensPrice}>Preço: R$ {item.price}</Text>
+  const organizarPratosPorCategoria = (pratos: any) => {
+    const pratosPorCategoria = pratos.reduce((acc: any, prato: any) => {
+      const categoria = prato.title;
+      if (!acc[categoria]) {
+        acc[categoria] = [];
+      }
+      acc[categoria].push(prato);
+      return acc;
+    }, {});
+
+    return Object.keys(pratosPorCategoria).map((categoria) => ({
+      title: categoria,
+      data: pratosPorCategoria[categoria],
+    }));
+  };
+
+  const secoesPratos = organizarPratosPorCategoria(pratos);
+  
+
+  
+  
+  const renderItem = ({ item }) => {
+
+    return (
+      <TouchableOpacity onPress={() => mostrarMensagem(item)}>
+        <ScrollView style={styles.itensPosition}>
+          <SafeAreaView style={{ flexDirection: 'row' }}>
+            <SafeAreaView style={{ flex: 1, paddingRight: 8 }}>
+              <Text style={styles.itensName}>{item.name}</Text>
+              <Text style={[styles.itensText, { flexWrap: 'wrap', textAlign: 'left' }]}>
+                {item.ingredients.replace(/\\n/g, '\n')}
+              </Text>
+              <Text style={styles.itensPrice}>Preço: R$ {item.price}</Text>
+            </SafeAreaView>
           </SafeAreaView>
-          <Image source={item.image} style={styles.imagesSize} />
-        </SafeAreaView>
-      </ScrollView>
-    </TouchableOpacity>
-  );
+        </ScrollView>
+      </TouchableOpacity>
+    );
+  };
+  
+
+  
 
   const mostrarMensagem = (item: any) => {
     setPratoSelecionado([...pratoSelecionado, item]);
@@ -70,7 +97,7 @@ export default function TelaInicial() {
   return (
     <SafeAreaView style={styles.container}>
         <SectionList
-          sections={sectionsData}
+          sections={secoesPratos}
           keyExtractor={(item, index) => item.name + index}
           renderItem={renderItem}
           renderSectionHeader={({ section: { title } }) => (

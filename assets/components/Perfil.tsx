@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Image, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { Image, Text, SafeAreaView, StyleSheet } from 'react-native';
 import { UsuarioContext } from '../../src/context/context';
 import usuariosCadastrados from '../../src/data/usuarios';
 
 export default function Perfil() {
   const { username, senha } = useContext(UsuarioContext); // Use o contexto do usuário
   const { telefone, setTelefone } = useContext(UsuarioContext); // Use os setters do contexto
-
+  const {usuarios} = useContext(UsuarioContext);
   useEffect(() => {
     
     const usuarioEncontrado = usuariosCadastrados.find(
@@ -42,9 +42,10 @@ export default function Perfil() {
   return (
     <SafeAreaView style={styles.container}>
         <SafeAreaView>
-          <Image source={ require('../../src/img/Vinicius.jpg') } style={styles.section} />
-          <Text style={styles.text}>Usuário: {username}</Text>
-          <Text style={styles.text}>Telefone: {telefone}</Text>
+          <Image source={ require('../../src/img/vo.jpg') } style={styles.section} />
+          <Text style={styles.text}>Usuário: {usuarios.nome}</Text>
+          <Text style={styles.text}>Telefone: {usuarios.telefone}</Text>
+          <Text style={styles.text}>Email: {usuarios.email}</Text>
         </SafeAreaView>
     </SafeAreaView>
   );
